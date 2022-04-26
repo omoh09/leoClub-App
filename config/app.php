@@ -41,7 +41,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool) env('APP_DEBUG', TRUE),
 
     /*
     |--------------------------------------------------------------------------
@@ -57,6 +57,12 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL'),
+
+    'clodinary_url'=> env('CLOUDINARY_URL', 'cloudinary://375663745634946:Pqa1XJ0mc48EMhEmptryPsHQu3A@dv1ul1mxv'),
+    'clodinary_api_key'=> env('CLOUDINARY_API_KEY', '375663745634946'),
+    'clodinary_api_secret'=> env('CLOUDINARY_API_SECRET', 'Pqa1XJ0mc48EMhEmptryPsHQu3A'),
+    'clodinary_cloud_name'=> env('CLOUDINARY_CLOUD_NAME', 'dv1ul1mxv'),
+    'clodinary_secure'=> env('CLOUDINARY_SECURE', true),
 
     /*
     |--------------------------------------------------------------------------

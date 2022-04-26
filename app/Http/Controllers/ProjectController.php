@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ProjectResource;
+use App\Http\Resources\FileResource;
 use Illuminate\Database\Eloquent\Model;
 use JD\Cloudder\Facades\Cloudder;
 use Illuminate\Http\Request;
@@ -20,13 +21,16 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //$data = Project::all();
-        $data = ProjectResource::collection(Project::all());
-        return json_encode([
-            'message' => 'successfully!',
-            'data' => $data
-        ], 200);
-    }
+        try{
+            $data = ProjectResource::collection(Project::all());
+            return response()->json([
+                'message' => 'success!',
+                'data' => $data
+            ], 200);
+        } catch(Exception $e) {
+                return $e->getMessage();
+            }
+        }
 
     /**
      * Show the form for creating a new resource.
@@ -50,7 +54,7 @@ class ProjectController extends Controller
             'title' => $request->title,
             'description' => $request->description
         ]);
-
+        
         if ($request->hasFile('pictures')) {
             $files = $request->file('pictures');
             $url  = cloudinary()->upload($files->getRealPath(),['folder' => 'leo'])->getSecurePath();
@@ -62,7 +66,7 @@ class ProjectController extends Controller
             }
         }
         
-        return \json_encode([
+        return response()->json([
             'message' => 'success',
             'data' => $project
         ]);      
@@ -77,8 +81,8 @@ class ProjectController extends Controller
     public function show($id)
     {
         $data = Project::find($id);
-        return json_encode([
-            'message' => 'successfully!',
+        return response()->json([
+            'message' => 'success!',
             'data' => $data
         ], 200);
     }
@@ -103,11 +107,23 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $this->show($id);
-        $title = $request->title;
-        $dta->save();
-        return json_encode([
-            'message' => 'successfully updated!'
+        $data = Project::find($id);
+        $data->title = $request->title;
+        $data->description = $request->description;
+        $data->save();
+
+        if ($request->hasFile('pictures')) {
+            $files = $request->file('pictures');
+            $url  = cloudinary()->upload($files->getRealPath(),['folder' => 'leo'])->getSecurePath();
+            if($url){
+                $file = $project->files()->update([
+                    'url' => $url
+                ])->whereId($id);
+            }
+        }
+        return response()->json([
+            'message' => 'successfully updated!',
+            'data' => $data
         ], 200);
     }
 
@@ -119,9 +135,9 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        $data = $this->show($id);
+        $data = Project::find($id);
         $data->delete();
-        return json_encode([
+        return response()->json([
             'message' => 'successfully deleted'
         ], 200);
     }

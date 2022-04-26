@@ -19,6 +19,6 @@ class Project extends Model
 
     public function files()
     {
-        return $this->hasOne(File::class, 'project_id','owner');
+        return $this->hasOne(File::class);
     }
 }

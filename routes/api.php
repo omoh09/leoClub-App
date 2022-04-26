@@ -26,4 +26,4 @@ Route::get('/project', [ProjectController::class, 'index']);
 Route::Post('/project', [ProjectController::class, 'store']);
 Route::get('/project/{id}', [ProjectController::class, 'show']);
 Route::put('/project/{id}', [ProjectController::class, 'update']);
-Route::Post('/file', [ProjectController::class, 'actionCreate']);
+Route::delete('/project/{id}', [ProjectController::class, 'destroy']);

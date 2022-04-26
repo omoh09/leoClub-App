@@ -20,8 +20,7 @@ class ProjectResource extends JsonResource
             'description' => $this->description ?? "",
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'file' => FileResource::make($this->files) ?? $this->files
-            
+            'file' => FileResource::make($this->files)
         ];
     }
 }

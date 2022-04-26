@@ -14,8 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('files', function (Blueprint $table) {
-            $table->string('project_id');
+            $table->unsignedBigInteger('project_id');
             $table->string('url');
+            $table->timestamps();
+            $table->foreign('project_id')
+                ->references('id')
+                ->on('projects')
+                ->onDelete('cascade');
         });
     }
 
