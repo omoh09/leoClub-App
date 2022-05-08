@@ -22,6 +22,9 @@ use Illuminate\Support\Facades\Route;
 // });
 
 //Route::resource('project', 'ProjectController']);
+Route::get('/test', function(){
+    return json_encode(['message' => 'Server is Live']); 
+});
 Route::get('/project', [ProjectController::class, 'index']);
 Route::Post('/project', [ProjectController::class, 'store']);
 Route::get('/project/{id}', [ProjectController::class, 'show']);
