@@ -50,6 +50,11 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'required|unique:projects|max:255',
+            'description' => 'required',
+        ]);
+
         $project = Project::create([
             'title' => $request->title,
             'description' => $request->description
